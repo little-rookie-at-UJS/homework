@@ -120,8 +120,51 @@ void delete_node(tree t,int n){
 }
 
 //公共祖先
+void search(tree t,int n1,int n2){
+    t->height=1;
+    Node node1,node2;
+    node1=t;
+    node2=t;
+    while (node1&&node1->n!=n1){
+        if(node1->n>n1){
+            node1=node1->left;
+        } else node1=node1->right;
+        if(node1)
+         node1->height= node1->parents->height+1;
+    }
+    if(!node1) {
+        cout<<n1<<"找不到"<<endl;
+        return;
+    }
+    while (node2&&node2->n!=n2){
+        if(node2->n>n2){
+            node2=node2->left;
+        } else node2=node2->right;
+        if(node2)
+            node2->height= node2->parents->height+1;
+    }
+    if(!node2) {
+        cout<<n2<<"找不到"<<endl;
+        return;
+    }
+    while(node1->height!=node2->height){
+        if(node1->height>node2->height) node1=node1->parents;
+        else node2= node2->parents;
+    }
+    while (node1!=node2){
+        node1= node1->parents;
+        node2=node2->parents;
+    }
+    cout<<node1->n<<endl;
+
+}
 
 //不小于k的关键字
+void print_li(tree t,int n){
+    if(t->right)print_li(t->right,n);
+    if(t->n>=n)cout<<t->n<<" ";
+    if(t->left)print_li(t->left,n);
+}
 
 int main(){
     int n;
@@ -139,4 +182,9 @@ int main(){
     delete_node(t,n);
     middle(t);
     cout<<endl;
+    int x,y;
+    cin>>x>>y;
+    search(t,x,y);
+    cin>>n;
+    print_li(t,n);
 }
