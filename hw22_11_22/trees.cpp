@@ -67,6 +67,57 @@ void middle(tree t){
 }
 
 //删除
+void delete_node(tree t,int n){
+    Node node=t;
+    Node pre;
+    while (node&&node->n!=n){
+        pre=node;
+        if(node->n>n){
+            node=node->left;
+        } else{
+            node=node->right;
+        }
+    }
+    if(!node){
+        cout<<"无此节点"<<endl;
+    } else if((!node->left)&&(!node->right)){
+        if(pre->left==node){
+            pre->left= nullptr;
+        } else pre->right= nullptr;
+        delete(node);
+    } else if((!node->left)||(!node->right)){
+        if(node->left){
+            if(pre->left==node){
+                pre->left= node->left;
+            } else pre->right= node->left;
+            node->left->parents=pre;
+        } else {
+            if(pre->left==node){
+                pre->left= node->right;
+            } else pre->right= node->right;
+            node->right->parents=pre;
+        }
+        delete(node);
+    } else{
+        Node  s=node->right;
+        while (s->left){
+            s=s->left;
+        }
+        node->n=s->n;
+        if(!s->right){
+            if(s->parents!=node)
+             s->parents->left= nullptr;
+            else s->parents->right= nullptr;
+            delete(s);
+        } else{
+            s->parents->left= s->right;
+            s->right->parents=s->parents;
+            delete(s);
+        }
+    }
+
+
+}
 
 //公共祖先
 
@@ -83,4 +134,9 @@ int main(){
     }
     creat(v,&t);
     middle(t);
+    cout<<endl;
+    cin>>n;
+    delete_node(t,n);
+    middle(t);
+    cout<<endl;
 }
