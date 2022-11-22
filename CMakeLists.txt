@@ -5,3 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(homework main.cpp)
 add_executable(hw22_11_22 hw22_11_22/trees.cpp)
+add_executable(train train/maisenshu.cpp)
