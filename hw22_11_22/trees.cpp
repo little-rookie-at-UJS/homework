@@ -158,7 +158,6 @@ void search(tree t,int n1,int n2){
     cout<<node1->n<<endl;
 
 }
-
 //不小于k的关键字
 void print_li(tree t,int n){
     if(t->right)print_li(t->right,n);
