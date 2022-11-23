@@ -61,8 +61,8 @@ void creat(vector<int> v,tree* t){
 };
 //遍历
 void middle(tree t){
-    cout<<t->n<<" ";
     if(t->left)middle(t->left);
+    cout<<t->n<<" ";
     if(t->right)middle(t->right);
 }
 

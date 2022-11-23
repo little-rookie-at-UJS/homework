@@ -4,24 +4,41 @@
 #include "bits/stdc++.h"
 using namespace std;
 int mx=0;
-//无限背包问题 a数组 t种票子 最大m个
+//完全背包问题 a数组 t种票子 最大m个
 int dp(int a[],int t,int m){
+    int f[5001];
+
+//    调最大值
+    memset(f,8000,sizeof(f));
+    f[0]=0;
+//   t个物品进行变量
+    for (int i = 1; i <= t; ++i) {
+//    背包问题
+        for (int j = a[i]; j <=a[t]*m ; ++j) {
+            f[j]=min(f[j],f[j-a[i]]+1);
+        }
+    }
+    for (int i = 0; i <=a[t]*m ; ++i) {
+        if(f[i]>m)
+            return i-1;
+    }
+    return a[t]*m;
 
 }
 //m个邮票最大 n个种类 找到了k种 max目前最大值 a[]面值 as[]最好面值
 void dfs(int m,int n,int k,int max,int a[],int as[]){
     if(k==n+1){
         if(max>mx){
-            for (int i = 0; i < n; ++i)
+            for (int i = 1; i <= n; ++i)
                 as[i]=a[i];
             mx=max;
-            return;
-        }
-    }
-    for (int i = a[k-1]+1; i < max+1; ++i) {
-        a[k]=i;
-        int mas;
 
+        }
+        return;
+    }
+    for (int i = a[k-1]+1; i <=max+1; ++i) {
+        a[k]=i;
+        int mas= dp(a,k,m);
         dfs(m,n,k+1,mas,a,as);
     }
 }
@@ -30,6 +47,12 @@ int main(){
     int a[20]={0};
     int as[20]={0};
     cin>>m>>n;
+    dfs(m,n,1,0,a,as);
+    for (int i = 1; i <=n; ++i) {
+        cout<<as[i]<<" ";
+    }
+    cout<<endl;
+    cout<<"MAX="<<mx;
 }
 
 //#include<iostream>
