@@ -1,33 +1,104 @@
 //
 // Created by DELLPC on 2022/11/22.
 //
-#include <iostream>
-#define maxn 55
+#include "bits/stdc++.h"
 using namespace std;
-int f[maxn][maxn][maxn][maxn],a[maxn][maxn];
-int n,m;
-int max_ele(int a,int b,int c,int d){
-    if (b>a)
-        a = b;
-    if (c>a)
-        a = c;
-    if (d>a)
-        a = d;
-    return a;
+typedef struct number{
+    int n;
+    int grade;
+    number(int n,int grade):n(n),grade(grade){}
+};
+bool cmp1(number n1,number n2){
+    return n1.grade<n2.grade;
+};
+bool cmp2(number n1,number n2){
+    return n1.n<n2.n;
 }
+
 int main(){
-    cin >> n >> m;
-    for (int i=1;i<=n;i++)
-        for (int j=1;j<=m;j++)
-            cin >> a[i][j];
-    for (int i=1;i<=n;i++)
-        for (int j=1;j<=m;j++)
-            for (int k=1;k<=n;k++)
-                for (int l=j+1;l<=m;l++)
-                    f[i][j][k][l]=max_ele(f[i][j-1][k-1][l],f[i-1][j][k][l-1],f[i][j-1][k][l-1],f[i-1][j][k-1][l])+a[i][j]+a[k][l];
-    cout << f[n][m-1][n-1][m] << endl;
-    return 0;
+    int n,x;
+
+    vector<number >v,v1,v2;
+    cin>>n;
+    for (int i = 0; i < n; ++i) {
+        cin>>x;
+
+        v.push_back(number(i,x));
+
+    }
+
+    sort(v.begin(),v.end(), cmp1);
+    int grade;
+    cin>>grade;
+    int r=v.size()-1;
+    if(v[r].grade<grade){
+        sort(v.begin(),v.end(), cmp2);
+        for (auto j = v.begin(); j!=v.end() ; ++j) {
+            cout<<(*j).grade<<" ";
+        }
+        cout<<endl;
+        return 0;
+    }
+
+    int i;
+    if(v[0].grade<grade) {
+        v1.push_back(v[0]);
+        for (i = 1; i < n; ++i) {
+            v1.push_back(v[i]);
+            if (v[i].grade >= grade && v[i - 1].grade < grade) {
+                v1.pop_back();
+                break;
+            }
+        }
+    }
+    else i=0;
+
+    for ( i ; i <n ; ++i) {
+       v2.push_back(v[i]);
+    }
+    sort(v1.begin(),v1.end(), cmp2);
+
+    sort(v2.begin(),v2.end(), cmp2);
+    for (auto j = v1.begin(); j!=v1.end() ; ++j) {
+        cout<<(*j).grade<<" ";
+    }
+    for (auto j = v2.begin(); j!=v2.end() ; ++j) {
+        cout<<(*j).grade<<" ";
+    }
+    cout<<endl;
+    sort(v2.begin(),v2.end(), cmp1);
+    for (auto j = v2.begin(); j!=v2.end() ; ++j) {
+        cout<<(*j).grade<<" ";
+    }
+
 }
+//#include <iostream>
+//#define maxn 55
+//using namespace std;
+//int f[maxn][maxn][maxn][maxn],a[maxn][maxn];
+//int n,m;
+//int max_ele(int a,int b,int c,int d){
+//    if (b>a)
+//        a = b;
+//    if (c>a)
+//        a = c;
+//    if (d>a)
+//        a = d;
+//    return a;
+//}
+//int main(){
+//    cin >> n >> m;
+//    for (int i=1;i<=n;i++)
+//        for (int j=1;j<=m;j++)
+//            cin >> a[i][j];
+//    for (int i=1;i<=n;i++)
+//        for (int j=1;j<=m;j++)
+//            for (int k=1;k<=n;k++)
+//                for (int l=j+1;l<=m;l++)
+//                    f[i][j][k][l]=max_ele(f[i][j-1][k-1][l],f[i-1][j][k][l-1],f[i][j-1][k][l-1],f[i-1][j][k-1][l])+a[i][j]+a[k][l];
+//    cout << f[n][m-1][n-1][m] << endl;
+//    return 0;
+//}
 //#include<bits/stdc++.h>
 //using namespace std;
 //int f[31][31],i,j,m,n;
