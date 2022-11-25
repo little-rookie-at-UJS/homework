@@ -1,21 +1,53 @@
 ////
 //// Created by DELLPC on 2022/11/22.
 ////
-#include<bits/stdc++.h>
-#define int long long
+#include "bits/stdc++.h"
 using namespace std;
-const int N=1e4+5,M=1e7+5;
-int n,m,w[N],v[N],f[M];
-signed main(){
-    scanf("%lld%lld",&m,&n);
-    for(int i=1;i<=n;i++)
-        scanf("%lld%lld",&w[i],&v[i]);
-    for(int i=1;i<=n;i++)
-        for(int j=w[i];j<=m;j++)
-            f[j]=max(f[j],f[j-w[i]]+v[i]);
-    printf("%lld",f[m]);
-    return 0;
+int dp[5003];
+int maps[5003][5003];
+bool isb[5003];
+int main(){
+
+    memset(dp,0,sizeof(dp));
+    memset(maps,0,sizeof(maps));
+    memset(isb, true,sizeof(isb));
+    ios::pos_type(false);
+    cin.tie(0);
+    int n,m;
+    int f,to;
+    cin>>n>>m;
+    for (int i = 0; i < m; ++i) {
+        cin>>f>>to;
+        isb[to]= false;
+        maps[f][to]=1;
+    }
+    for (int i = 1; i <=n; ++i) {
+        if(isb[i])dp[i]=1;
+        else
+            for (int j = 1; j <i; ++j) {
+                if(maps[j][i])
+                    dp[i]+=dp[j];
+                dp[i]%= 80112002;
+            }
+    }
+    cout<<dp[n];
+
 }
+//#include<bits/stdc++.h>
+//#define int long long
+//using namespace std;
+//const int N=1e4+5,M=1e7+5;
+//int n,m,w[N],v[N],f[M];
+//signed main(){
+//    scanf("%lld%lld",&m,&n);
+//    for(int i=1;i<=n;i++)
+//        scanf("%lld%lld",&w[i],&v[i]);
+//    for(int i=1;i<=n;i++)
+//        for(int j=w[i];j<=m;j++)
+//            f[j]=max(f[j],f[j-w[i]]+v[i]);
+//    printf("%lld",f[m]);
+//    return 0;
+//}
 //#include<bits/stdc++.h>
 //using namespace std;
 ////f[i][l]：以i作末尾，选了l本书时的最小花费
