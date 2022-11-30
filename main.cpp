@@ -1,24 +1,60 @@
-#include "bits/stdc++.h"
-using namespace std;
-typedef struct node{
-    int n;
-    int len;
-    int m;
-    node(int n,int len):n(n),len(len){};
-};
-//比较函数 值由小到大
-bool cmp1(node n1,node n2){
-    return n1.n<n2.n;
-}
-//比较函数 原位置由小到大
-bool cmp2(node n1,node n2){
-    return n1.len<n2.len;
+#include "stdio.h"
+#include "stdlib.h"
+
+//void quickSort(int[] array){
+//
+//}
+
+//void bubblingSort(int[] array){
+//
+//}
+
+int*  getArray(int n){
+    int *array;
+    array=(int *) malloc((n+1)*4);
+    printf("%p\n",array);
+    array[0] =0;
+    for(int i=1;i<n+1;i++){
+        int ran =  rand();
+//        printf("%d  \n",ran);
+        array[i] =ran;
+    }
+    printf("%p\n",array);
+    return array;
 }
 
-int main(){
-    int a[10];
-    cout<<a[2]<<endl;
+int  main(){
+    int *array;
+    printf("%p\n",array);
+    array  = getArray(2);
+    printf("%p\n",array);
+    for(int i = 0;i<3;i++){
+        printf("\n%d  ",array[i]);
+    }
+
+
 }
+//#include "bits/stdc++.h"
+//using namespace std;
+//typedef struct node{
+//    int n;
+//    int len;
+//    int m;
+//    node(int n,int len):n(n),len(len){};
+//};
+////比较函数 值由小到大
+//bool cmp1(node n1,node n2){
+//    return n1.n<n2.n;
+//}
+////比较函数 原位置由小到大
+//bool cmp2(node n1,node n2){
+//    return n1.len<n2.len;
+//}
+//
+//int main(){
+//    int a[10];
+//    cout<<a[2]<<endl;
+//}
 //    vector<node> v;
 //    int n,s;
 //    cin>>s;
