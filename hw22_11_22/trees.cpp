@@ -69,7 +69,7 @@ void middle(tree t){
 //删除
 void delete_node(tree t,int n){
     Node node=t;
-    Node pre;
+    Node pre= nullptr;
     while (node&&node->n!=n){
         pre=node;
         if(node->n>n){

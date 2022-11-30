@@ -1,28 +1,273 @@
-#include <iostream>
-#include <cstring>
-
-#include <cstdio>
+#include "bits/stdc++.h"
 using namespace std;
-char a[4005],b[4005];
-int lena,lenb,f[4005][4005],k;//f(i,j)表示将A串前i个字符改为B串前j个字符需要的步数
-int main() {
-    cin>>a>>b;
-    lena=strlen(a);lenb=strlen(b);
-    for(int i=lena;i>=1;i--) a[i]=a[i-1];
-    for(int i=lenb;i>=1;i--) b[i]=b[i-1];//初始化
-    for(int i=0;i<=lena;i++) f[i][0]=i;
-    for(int i=0;i<=lenb;i++) f[0][i]=i;//边界状态 因为将A串无字符变到B串i个字符时需要加i个字符 B串无字符时同理
-    for(int i=1;i<=lena;i++){
-        for(int j=1;j<=lenb;j++){
-            k=1;//在后面会用到 方便‘改’的操作
-            if(a[i]==b[j]) k=0;
-
-            f[i][j]=min(min(f[i-1][j]+1,f[i][j-1]+1),f[i-1][j-1]+k);//若当前A、B串指向字符相等则不进行‘改’的操作
-        }
-    }
-    printf("%d",f[lena][lenb]);//就是将A串前lena个数变为B串前lenb个数
-    return 0;
+typedef struct node{
+    int n;
+    int len;
+    int m;
+    node(int n,int len):n(n),len(len){};
+};
+//比较函数 值由小到大
+bool cmp1(node n1,node n2){
+    return n1.n<n2.n;
 }
+//比较函数 原位置由小到大
+bool cmp2(node n1,node n2){
+    return n1.len<n2.len;
+}
+
+int main(){
+    int a[10];
+    cout<<a[2]<<endl;
+}
+//    vector<node> v;
+//    int n,s;
+//    cin>>s;
+//    for (int i = 0; i < s; ++i) {
+//        cin>>n;
+//        v.push_back(node(n,i));
+//    }
+//    sort(v.begin(),v.end(),cmp1);
+//    v[0].m=1;
+//    for (int i =1; i < s; ++i) {
+//        if(v[i].n!=v[i-1].n)
+//            v[i].m=v[i-1].m+1;
+//        else   v[i].m=v[i-1].m;
+//    }
+//    sort(v.begin(),v.end(),cmp2);
+//    for (int i = 0; i < s; ++i) {
+//        cout<<v[i].m<<" ";
+//    }
+//}
+
+//#include<stdio.h>
+//int main()
+//{char s[80];
+//    char *p;
+//    p=s;
+//    gets(p);
+//    while(*p!='\0')
+//    {
+//        if(*p==' ')
+//            *p='*';
+//        p++;
+//    }
+//    puts(s);
+//}
+//typedef struct node{
+//    int x1,x2,y1,y2;
+//    node(int x1,int x2,int y1,int y2):x1(x1),x2(x2),y1(y1),y2,(y2);
+//};
+//
+//int main(){
+////   定义链表
+//    vector<node> v;
+//
+//
+//
+//}
+//using namespace std;
+//int main(){
+//    int n;
+//    cin>>n;
+//    while (n--){
+//        int l,n;
+//        cin>>l>>n;
+//        char c;
+//        getchar();
+//        while (l--){
+//            c=getchar();
+//            if(c=='1')n--;
+//
+//        }
+//       cout<<((n>0)?n:0)<<endl;
+//    }
+//}
+//#include<stdio.h>
+//int main(){
+//    printf("TSINGHUA UNIVERSITY");
+//}
+//#include<stdio.h>
+//int fun(int a,int b)
+//{
+//    if(b>0) {
+//        if(a>=0)
+//        {
+//            a=a;
+//        }
+//        else
+//        {
+//            a=-a;
+//        }
+//    }
+//    if(b<0) {
+//        if(a>=0)
+//            a=-a;
+//        else a=a;
+//    }
+//    return a;
+//}
+//
+//int main()
+//{
+//    int x,y;
+//    int m;
+//    scanf("%d %d",&x,&y);
+//
+//
+//    m=fun(x,y);
+//    printf("%d",m);
+//
+//    return 0;
+//}
+//#include<stdio.h>
+//int fun(int a,int b)
+//{
+//    if(a==0) return 0;
+////    if(b>0) {
+////        if(a>=0)
+////        {
+////            a=a;
+////        }
+////        else
+////        {
+////            a=-a;
+////        }
+////    }
+////    if(b<0) {
+////        if(a>=0)
+////            a=-a;
+////        else a=a;
+////    }
+//    if(a*b<0) return -a;
+//    return a;
+//}
+//
+//int main()
+//{
+//    int x,y;
+//    int m;
+//    scanf("%d %d",&x,&y);
+//
+//    m=fun(x,y);
+//    printf("%d",m);
+//
+//    return 0;
+//}
+//#include<bits/stdc++.h>
+//typedef long long ll;
+//using namespace std;
+//inline int read()
+//{
+//    int x=0,f=1;char ch=getchar();
+//    while (ch<'0'||ch>'9'){if (ch=='-')f=-1;ch=getchar();}
+//    while (ch>='0'&&ch<='9'){x=x*10+ch-'0';ch=getchar();}
+//    return x*f;
+//}
+//int n,f[5005][2],c[5005],sum[5005];
+//int main()
+//{
+//    n=read();
+//    for (int i=1;i<=n;i++)
+//        c[i]=read(),sum[i]=sum[i-1]+c[i],f[i][0]=c[i];
+//    for (int len=1;len<n;len++)
+//        for (int i=1;i+len<=n;i++)
+//            f[i][len&1]=sum[i+len]-sum[i-1]-min(f[i+1][(len-1)&1],f[i][(len-1)&1]);
+//    printf("%d",f[1][(n-1)&1]);
+//    return 0;
+//}
+
+
+//#include <stdio.h>
+//#include <math.h>
+//#include "time.h"
+//
+//int main() {
+//    int N, k, temp, j = 1;
+//    int sum = 0;
+//    scanf("%d", &N);
+//    //输入位数
+//    long t= time(NULL);
+//    for (int i = pow(10, N - 1); i < pow(10, N); i++) {
+//        //取值范围
+//        sum = 0;
+//        //归零
+//        temp = i;
+//        //用temp来表示数
+//        for (int h = 1; h <=  N; h++) {
+//            //有几位就要循环几次
+//            j = temp % 10;
+//            //取最后一位数
+//            sum += pow(j, N);
+//            temp = temp / 10;
+//            //为取上一位数做准备
+//        }
+//        if (sum == i) {
+//            printf("%d\n", i);
+//            //如果相等就输出
+//        }
+//    }
+//    return 0;
+//
+//
+//}
+//#include<stdio.h>
+//int main(void)
+//{
+//    int count = 0;
+//    for (int i = 100; i <= 200; i++)
+//    {
+//        if (i % 3 != 0)
+//        {
+//            printf(" %d",i);
+//            count++;
+//
+//            if (count % 5 == 0)
+//            {
+//                printf("\n");
+//            }
+//        }
+//
+//    }
+//
+//    return 0;
+//}
+//#include "bits/stdc++.h"
+//using namespace std;
+//int main(){
+//    cout<<"  *\n";
+//    cout<<" ***\n";
+//    cout<<"*****\n";
+//    cout<<" ***\n";
+//    cout<<"  *\n";
+//
+//}
+
+
+//#include <iostream>
+//#include <cstring>
+//
+//#include <cstdio>
+//using namespace std;
+//char a[4005],b[4005];
+//int lena,lenb,f[4005][4005],k;//f(i,j)表示将A串前i个字符改为B串前j个字符需要的步数
+//int main() {
+//    cin>>a>>b;
+//    lena=strlen(a);lenb=strlen(b);
+//    for(int i=lena;i>=1;i--) a[i]=a[i-1];
+//    for(int i=lenb;i>=1;i--) b[i]=b[i-1];//初始化
+//    for(int i=0;i<=lena;i++) f[i][0]=i;
+//    for(int i=0;i<=lenb;i++) f[0][i]=i;//边界状态 因为将A串无字符变到B串i个字符时需要加i个字符 B串无字符时同理
+//    for(int i=1;i<=lena;i++){
+//        for(int j=1;j<=lenb;j++){
+//            k=1;//在后面会用到 方便‘改’的操作
+//            if(a[i]==b[j]) k=0;
+//
+//            f[i][j]=min(min(f[i-1][j]+1,f[i][j-1]+1),f[i-1][j-1]+k);//若当前A、B串指向字符相等则不进行‘改’的操作
+//        }
+//    }
+//    printf("%d",f[lena][lenb]);//就是将A串前lena个数变为B串前lenb个数
+//    return 0;
+//}
 
 //#include <stdio.h>
 //int main()
