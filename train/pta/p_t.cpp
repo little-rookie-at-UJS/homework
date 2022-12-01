@@ -1,11 +1,16 @@
 #include "bits/stdc++.h"
 //#include "stdlib.h"
 //#include "iostream"
-
+//#include "stack"
 using namespace std;
+typedef struct node{
+    int l;
+    int r;
+    node(int l,int r):l(l),r(r){}
+};
 long long c1;
 long long c2;
-int d[1000066];
+int d[10000066];
 void maopao(int a[],int n){
 
     int j,temp,bd,ex=n-1;
@@ -20,15 +25,45 @@ void maopao(int a[],int n){
             }
         }
     }
-//    for (int i = 0; i < n-1; ++i) {
-//        for (int j = 0; j < n-1-i; ++j) {
-//            if (++c1&&a[j]>a[j+1]){
-//                swap(a[j],a[j+1]);
-//                c2+=3;
-//            }
-//        }
-//    }
+}
+void quick_sort2(int s[], int n){
+    std::stack<node> stack;
+    stack.push(node(0,n-1));
 
+    while (!stack.empty()){
+        node no=stack.top();
+        stack.pop();
+        if(no.l<no.r){
+            //Swap(s[l], s[(l + r) / 2]); //将中间的这个数和第一个数交换 参见注1
+            int i =no.l, j = no.r, x = s[no.l];
+            while (i < j)
+            {
+                while(i < j && s[j] >= x) // 从右向左找第一个小于x的数
+                {
+                    ++c1;
+                    j--;
+                }
+                if(i < j) {
+                    c2++;
+                    s[i++] = s[j];
+                }
+
+                while(i < j && s[i] < x) // 从左向右找第一个大于等于x的数
+                {
+                    ++c1;
+                    i++;;
+                }
+                if(i < j) {
+                    c2++;
+                    s[j--] = s[i];
+                }
+            }
+            s[i] = x;
+            stack.push(node(no.l,i-1));
+            stack.push(node(i+1,no.r));
+
+        }
+    }
 
 }
 void quick_sort(int s[], int l, int r)
@@ -40,15 +75,21 @@ void quick_sort(int s[], int l, int r)
         while (i < j)
         {
             while(i < j && s[j] >= x) // 从右向左找第一个小于x的数
+            {
+                ++c1;
                 j--;
-            if(++c1&&i < j) {
+            }
+            if(i < j) {
                 c2++;
                 s[i++] = s[j];
             }
 
             while(i < j && s[i] < x) // 从左向右找第一个大于等于x的数
-                i++;
-            if(++c1&&i < j) {
+            {
+                ++c1;
+                i++;;
+            }
+            if(i < j) {
                 c2++;
                 s[j--] = s[i];
             }
@@ -61,26 +102,76 @@ void quick_sort(int s[], int l, int r)
 int main(){
     int n;
     cin>>n;
-
-
-    for (int i = 0; i < n; ++i) {
-        d[i]=n-i;
-
-//        d[i]=i;
-        d[i]=rand();
-//        if(i<n*0.9)
-//
-    }
-    maopao(d,n);
-    cout<<"冒泡排序进行了"<<c1<<"次比较\n"<<"执行"<<c2<<"次\n";
+    int max=0;
     c1=0,c2=0;
     for (int i = 0; i < n; ++i) {
         d[i]=n-i;
-//        d[i]=i;
+    }
+    maopao(d,n);
+    cout<<"冒泡排序(逆序排列)进行了"<<c1<<"次比较  "<<"执行"<<c2<<"次\n";
+     max=0;
+    c1=0,c2=0;
+    for (int i = 0; i < n; ++i) {
+        d[i]=i;
+//        d[i]=rand();
+//        if(i>n*0.1)
+//            d[i]=max+1;
+//        if(d[i]>max)max=d[i];
+//
+    }
+    maopao(d,n);
+    cout<<"冒泡排序(顺序排列)进行了"<<c1<<"次比较 "<<"执行"<<c2<<"次\n";
+    c1=0,c2=0;
+    for (int i = 0; i < n; ++i) {
+        d[i]=rand();
+//        if(i>n*0.1)
+//            d[i]=max+1;
+//        if(d[i]>max)max=d[i];
+//
+    }
+    maopao(d,n);
+    cout<<"冒泡排序(全随机排列)进行了"<<c1<<"次比较 "<<"执行"<<c2<<"次\n";
+    c1=0,c2=0;
+    for (int i = 0; i < n; ++i) {
+        d[i]=rand();
+        if(i>n*0.5)
+            d[i]=max+1;
+        if(d[i]>max)max=d[i];
+//
+    }
+    maopao(d,n);
+    cout<<"冒泡排序(50%随机数据排列)进行了"<<c1<<"次比较 "<<"执行"<<c2<<"次\n";
+    max=0;
+    c1=0,c2=0;
+    for (int i = 0; i < n; ++i) {
+        d[i]=n-i;
+    }
+    quick_sort2(d,n);
+    cout<<"快速排序(逆序排列)进行了"<<c1<<"次比较 "<<"执行"<<c2<<"次\n";
+    max=0;
+    c1=0,c2=0;
+    for (int i = 0; i < n; ++i) {
+        d[i]=i;
+    }
+    quick_sort2(d,n);
+    cout<<"快速排序(顺序排列)进行了"<<c1<<"次比较 "<<"执行"<<c2<<"次\n";
+    c1=0,c2=0;
+    for (int i = 0; i < n; ++i) {
         d[i]=rand();
     }
-    quick_sort(d,0,n);
-    cout<<"快排进行了"<<c1<<"次比较\n"<<"执行"<<c2<<"次";
+    quick_sort2(d,n);
+    cout<<"快速排序(全随机排列)进行了"<<c1<<"次比较 "<<"执行"<<c2<<"次\n";
+    c1=0,c2=0;
+    for (int i = 0; i < n; ++i) {
+        d[i]=rand();
+        if(i>n*0.5)
+            d[i]=max+1;
+        if(d[i]>max)max=d[i];
+//
+    }
+    quick_sort2(d,n);
+    cout<<"快速排序(50%随机数据排列)进行了"<<c1<<"次比较 "<<"执行"<<c2<<"次\n";
+
 }
 //#include <algorithm>
 //#include <iostream>
