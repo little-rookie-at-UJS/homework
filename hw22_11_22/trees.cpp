@@ -20,8 +20,6 @@ typedef struct node{
     struct node *right;
 }node,*tree,*Node;
 
-
-
 //    建树
 void creat(vector<int> v,tree* t){
     Node n,pre;
