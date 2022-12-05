@@ -3,7 +3,6 @@
 //#include "iostream"
 //#include "stack"
 using namespace std;
-
 //¼ÆÊý c1 c2;
 long long c1;
 long long c2;
