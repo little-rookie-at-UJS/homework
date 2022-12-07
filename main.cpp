@@ -1,32 +1,152 @@
-#include <cstdio>
-#include <algorithm>
-#include <cstring>
+//导入万能头
+#include "bits/stdc++.h"
+//命名空间
 using namespace std;
 
-const int M = 1e2 + 5;
-int a[M];
-int pre[M];
-int f[M][M];
+//求最小字典序
+bool cmp(string a, string b)
+{
+    return a + b < b + a;
+}
 
-int main() {
+//主函数
+int main()
+{
+    //总数 n
     int n;
-    scanf("%d", &n);
-    memset(f, 0x3f, sizeof(f));
-    for(int i = 1; i <= n; i ++) {
-        scanf("%d", &a[i]);
-        f[i][i] = 0;
-        pre[i] = pre[i - 1] + a[i];//实现O(1)求sum(i,j)
+//    vector string
+    vector<string> v;
+    cin>>n;
+    for(int i=0;i<n;i++){
+        string s;
+        cin>>s;
+        v.push_back(s);
     }
-    for(int i = 2; i <= n; i ++) {
-        for(int l = 1; l <= n - i + 1; l ++) {
-            for(int k = l, r = l + i - 1; k < r; k ++) {
-                f[l][r] = min(f[l][k] + f[k + 1][r] + pre[r] - pre[l - 1], f[l][r]);
-            }
+//    sort排序
+    sort(v.begin(),v.end(),cmp);
+//    拼接字符串
+    string ans="";
+    for(int i=0;i<n;i++){
+        ans+=v[i];
+    }
+//    输出ans 每1000个换行
+    int cnt=0;
+    for(int i=0;i<ans.size();i++){
+        cout<<ans[i];
+        cnt++;
+        if(cnt==1000){
+            cout<<endl;
+            cnt=0;
         }
     }
-    printf("%d", f[1][n]);
     return 0;
 }
+
+
+
+//#include "stdio.h"
+//
+//int main(){
+//    int n;
+//    scanf("%d",&n);
+//    for (int i = 0; i <n; ++i) {
+//        for (int j = 1; j <=n; ++j) {
+//            printf("%4d",i*n+j);
+//        }
+//        printf("\n");
+//    }
+//
+//}
+
+
+//#include<iostream>
+//#include<stdio.h>
+//#include<string>
+//using namespace std;
+//string arr[100];
+//
+//string sread() {
+//    string s1;
+//    char c;
+//    while ((c=getchar())!='\n')
+//    {
+//        s1.append(1,c);
+//    }
+////    getchar();
+//    return s1;
+//}
+//int main()
+//{
+//    int n;
+//    cin >> n;
+//    char c;
+////     getchar();
+//    getchar();
+////while ((c=getchar())=='\n');
+//    for (int i = 0; i < n; i++)
+//    {
+////        if(n==3&&i==n-3)getchar();
+////        if(n==4&&i==n-4)getchar();
+//        getline(cin, arr[i]);
+//
+////        arr[i].append(1,c);
+////       // cin >> arr[i];
+////        arr[i] += sread();
+//
+//    }
+////    cout<<n<<endl;
+////    for (int i = 0; i < n; i++)
+////    {
+////        cout << arr[i] << endl;
+////    }
+//    for (int i = 0; i < n; i++)
+//    {
+//        for (int a = 0; a < n - 1; a++)
+//        {
+//            if (arr[a].length() > arr[a + 1].length())
+//            {
+//                string temp = arr[a];
+//                arr[a] = arr[a + 1];
+//                arr[a + 1] = temp;
+//            }
+//        }
+//    }
+//    for (int i = 0; i < n; i++)
+//    {
+//        cout << arr[i] << endl;
+//    }
+//    return 0;
+//}
+
+//#include <cstdio>
+//#include <algorithm>
+//#include <cstring>
+//using namespace std;
+//
+//const int M = 1e2 + 5;
+//int a[M];
+//int pre[M];
+//int f[M][M];
+//
+//int main() {
+//    int n;
+//    scanf("%d", &n);
+//    memset(f, 0x3f, sizeof(f));
+//    for(int i = 1; i <= n; i ++) {
+//        scanf("%d", &a[i]);
+//        f[i][i] = 0;
+//        pre[i] = pre[i - 1] + a[i];//实现O(1)求sum(i,j)
+//    }
+//    for(int i = 2; i <= n; i ++) {
+//        for(int l = 1; l <= n - i + 1; l ++) {
+//            for(int k = l, r = l + i - 1; k < r; k ++) {
+//                f[l][r] = min(f[l][k] + f[k + 1][r] + pre[r] - pre[l - 1], f[l][r]);
+//            }
+//        }
+//    }
+//    printf("%d", f[1][n]);
+//    return 0;
+//}
 
 //#include "bits/stdc++.h"
 //using namespace std;
