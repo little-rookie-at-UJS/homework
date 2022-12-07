@@ -1,46 +1,92 @@
-//导入万能头
-#include "bits/stdc++.h"
-//命名空间
-using namespace std;
+#include<stdio.h>
+#include<stdlib.h>
 
-//求最小字典序
-bool cmp(string a, string b)
-{
-    return a + b < b + a;
+int max_both(int preSum,int number) {
+    return preSum > number ? preSum : number;
 }
 
-//主函数
-int main()
-{
-    //总数 n
-    int n;
-//    vector string
-    vector<string> v;
-    cin>>n;
-    for(int i=0;i<n;i++){
-        string s;
-        cin>>s;
-        v.push_back(s);
+int count = 0;
+int max_Interval(int a[],int n) {
+    int sum = 0;
+    int i = 0;
+    int length = n;
+    int b[100] = { 0 };
+    int max = 0;
+
+
+    while (a[i]) {
+        i++;
+        length++;
     }
-//    sort排序
-    sort(v.begin(),v.end(),cmp);
-//    拼接字符串
-    string ans="";
-    for(int i=0;i<n;i++){
-        ans+=v[i];
+    for (i = 1; i < length+1; i++) {
+        b[i] = max_both(a[i-1] + b[i-1], a[i-1]);
+        max = max_both(max, b[i]);
+        count +=2 ;
     }
-//    输出ans 每1000个换行
-    int cnt=0;
-    for(int i=0;i<ans.size();i++){
-        cout<<ans[i];
-        cnt++;
-        if(cnt==1000){
-            cout<<endl;
-            cnt=0;
-        }
-    }
-    return 0;
+    return max;
 }
+
+int main() {
+    int b[100] = { 0 };
+
+    for (int i = 0; i < sizeof(b)/4; i++) {
+        b[i] = rand() % 100 - 50;
+    }
+
+    int max1 = max_Interval(b);
+    printf("动态规划执行次数：%d", count);
+    printf("动态规划最大值：%d", max1);
+}
+
+
+
+
+
+
+
+////导入万能头
+//#include "bits/stdc++.h"
+////命名空间
+//using namespace std;
+//
+////求最小字典序
+//bool cmp(string a, string b)
+//{
+//    return a + b < b + a;
+//}
+//
+////主函数
+//int main()
+//{
+//    //总数 n
+//    int n;
+////    vector string
+//    vector<string> v;
+//    cin>>n;
+//    for(int i=0;i<n;i++){
+//        string s;
+//        cin>>s;
+//        v.push_back(s);
+//    }
+////    sort排序
+//    sort(v.begin(),v.end(),cmp);
+////    拼接字符串
+//    string ans="";
+//    for(int i=0;i<n;i++){
+//        ans+=v[i];
+//    }
+////    输出ans 每1000个换行
+//    int cnt=0;
+//    for(int i=0;i<ans.size();i++){
+//        cout<<ans[i];
+//        cnt++;
+//        if(cnt==1000){
+//            cout<<endl;
+//            cnt=0;
+//        }
+//    }
+//    return 0;
+//}
 
 
 
