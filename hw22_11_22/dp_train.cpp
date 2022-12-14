@@ -36,7 +36,8 @@ int max(int a,int b,int c){  //求出a,b,c三者中的最大值
     if(a>c) return a;
     else return c;
 }
-int maxSubArray(int a[],int left,int right){
+int maxSubArray(int a[],int left,int right)
+{
     int i,j;
     int maxLeftSum,maxRightSum;
     int maxLeftBorderSum,leftBorderSum;
@@ -93,9 +94,9 @@ int max_dp(int a[],int n)  //求解算法
 //    遍历
     for(int j=1;j<=n;j++){
 //        计数++
-        c1+=2;
+        c1++;
 //        在本身数以及与前一个数中找一个较大值
-        dp[j]=max_double(dp[j-1]+a[j],a[j]);
+        dp[j]=max_double(dp[j-1]+a[j-1],a[j-1]);
 //        dp[j]与之前的最大值进行比较
         result=max_double(result,dp[j]);
     }
@@ -112,20 +113,18 @@ int main(){
     srand(time(NULL));
 //    随机出数
     for (int i = 0; i < n; ++i) {
-        //
         a[i]=(rand()%50)-20;
     }
 //    输出结果
-    for (int i = 0; i < n; ++i) {
-        cout<<a[i]<<" ";
-    }
-    cout<<endl;
+//    for (int i = 0; i < n; ++i) {
+//        cout<<a[i]<<" ";
+//    }
+//    cout<<endl;
     c1=0,c2=0;
     cout<<"暴力搜索 最大值为"<<max_baoli(a,n)<<" 进行了"<<c1<<"次计算 更新了"<<c2<<"次结果"<<endl;
     c1=0,c2=0;
     cout<<"分治法 最大值为"<<maxSubArray(a,0,n-1)<<" 进行了"<<c1<<"次计算 更新了"<<c2<<"次结果"<<endl;
     c1=0,c2=0;
     cout<<"动态规划 最大值为"<<max_dp(a,n)<<" 进行了"<<c1<<"次计算"<<endl;
-
 }
 

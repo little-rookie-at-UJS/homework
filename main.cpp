@@ -1,48 +1,119 @@
 #include<stdio.h>
 #include<stdlib.h>
-
+#define Maxsize 100
+// 动态规划
 int max_both(int preSum,int number) {
     return preSum > number ? preSum : number;
 }
 
 int count = 0;
-int max_Interval(int a[],int n) {
+int max_Interval(int a[],int length) {
     int sum = 0;
     int i = 0;
-    int length = n;
-    int b[100] = { 0 };
+    int b[150] = { 0 };
     int max = 0;
 
 
-    while (a[i]) {
-        i++;
-        length++;
-    }
     for (i = 1; i < length+1; i++) {
+        // b[i]表示前项和的最大值，比较前i-1项和与第i项
         b[i] = max_both(a[i-1] + b[i-1], a[i-1]);
+        // 更新最大值
         max = max_both(max, b[i]);
         count +=2 ;
     }
     return max;
 }
 
-int main() {
-    int b[100] = { 0 };
+// 蛮力法
+// 比较次数
+int count2 = 0;
+// 更新次数
+int count3 = 0;
+int max_Interval2(int b[], int length) {
+    int start = 0;
+    int end = 0;
+    int max = 0;
+    int sum = 0;
 
+    for (int i = 0; i < length; i++) {
+        sum = 0;
+        for (int j = i; j < length; j++) {
+            sum += b[j];
+            count2++;
+            if (sum > max) {
+                count3++;
+                start = i;
+                end = j;
+                max = sum;
+            }
+        }
+    }
+    return max;
+}
+
+// 分治法
+int max_Interval3(int b[], int left, int right) {
+    if (left == right) {
+        return b[left]>0?b[left]:0;
+    }
+    // 分界点
+    int center = (left + right) / 2;
+    // 分界点左侧最大值
+    int left_max = max_Interval3(b, left, center);
+    // 分界点右侧最大值
+    int right_max = max_Interval3(b, center+1, right);
+
+    int sum = 0;
+    // 计算center左侧区间的最大值和
+    int left_maxValue = 0;
+    for (int i = center; i >= left; i--) {
+        sum += b[i];
+        if (left_maxValue < sum) {
+            left_maxValue = sum;
+        }
+    }
+    // 计算center右侧区间的最大值和
+    sum = 0;
+    int right_maxValue = 0;
+    for (int j = center+1; j <= right; j++) {
+        sum += b[j];
+        if (right_maxValue < sum) {
+            right_maxValue = sum;
+        }
+    }
+
+    int max = right_maxValue + left_maxValue;
+
+    if (max < left_max) {
+        max = left_max;
+    }
+    if (max < right_max) {
+        max = right_max;
+    }
+    return max;
+}
+
+int main() {
+    // 动态规划
+    int b[100] = { 0 };
     for (int i = 0; i < sizeof(b)/4; i++) {
         b[i] = rand() % 100 - 50;
     }
 
-    int max1 = max_Interval(b);
-    printf("动态规划执行次数：%d", count);
-    printf("动态规划最大值：%d", max1);
+    int max1 = max_Interval(b,Maxsize);
+    printf("动态规划执行次数：%d\n", count);
+    printf("动态规划最大值：%d\n", max1);
+
+    // 蛮力法
+    int max2 = max_Interval2(b, Maxsize);
+    printf("蛮力法比较次数：%d\n", count2);
+    printf("蛮力法更新次数：%d\n", count3);
+    printf("蛮力法最大值：%d\n", max2);
+
+    // 分治法
+    int max3 = max_Interval3(b, 0, Maxsize);
+    printf("分治法最大值：%d\n", max3);
 }
-
-
-
-
-
-
 
 ////导入万能头
 //#include "bits/stdc++.h"
